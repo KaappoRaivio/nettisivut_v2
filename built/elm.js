@@ -4355,12 +4355,43 @@ function _Browser_load(url)
 		}
 	}));
 }
-var $author$project$Main$LinkClicked = function (a) {
-	return {$: 'LinkClicked', a: a};
+
+
+
+var _Bitwise_and = F2(function(a, b)
+{
+	return a & b;
+});
+
+var _Bitwise_or = F2(function(a, b)
+{
+	return a | b;
+});
+
+var _Bitwise_xor = F2(function(a, b)
+{
+	return a ^ b;
+});
+
+function _Bitwise_complement(a)
+{
+	return ~a;
 };
-var $author$project$Main$UrlChanged = function (a) {
-	return {$: 'UrlChanged', a: a};
-};
+
+var _Bitwise_shiftLeftBy = F2(function(offset, a)
+{
+	return a << offset;
+});
+
+var _Bitwise_shiftRightBy = F2(function(offset, a)
+{
+	return a >> offset;
+});
+
+var _Bitwise_shiftRightZfBy = F2(function(offset, a)
+{
+	return a >>> offset;
+});
 var $elm$core$Basics$EQ = {$: 'EQ'};
 var $elm$core$Basics$GT = {$: 'GT'};
 var $elm$core$Basics$LT = {$: 'LT'};
@@ -5149,124 +5180,156 @@ var $elm$core$Task$perform = F2(
 			$elm$core$Task$Perform(
 				A2($elm$core$Task$map, toMessage, task)));
 	});
-var $elm$browser$Browser$application = _Browser_application;
-var $author$project$Main$Model = F2(
-	function (key, url) {
-		return {key: key, url: url};
-	});
+var $elm$browser$Browser$element = _Browser_element;
+var $author$project$Types$Landing = {$: 'Landing'};
+var $author$project$Types$MainModel = function (currentPage) {
+	return {currentPage: currentPage};
+};
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
-var $author$project$Main$init = F3(
-	function (flags, url, key) {
-		return _Utils_Tuple2(
-			A2($author$project$Main$Model, key, url),
-			$elm$core$Platform$Cmd$none);
-	});
+var $author$project$Main$init = function (_v0) {
+	return _Utils_Tuple2(
+		$author$project$Types$MainModel($author$project$Types$Landing),
+		$elm$core$Platform$Cmd$none);
+};
 var $elm$core$Platform$Sub$batch = _Platform_batch;
 var $elm$core$Platform$Sub$none = $elm$core$Platform$Sub$batch(_List_Nil);
-var $author$project$Main$subscriptions = function (_v0) {
+var $author$project$Main$subscriptions = function (model) {
 	return $elm$core$Platform$Sub$none;
-};
-var $elm$browser$Browser$Navigation$load = _Browser_load;
-var $elm$browser$Browser$Navigation$pushUrl = _Browser_pushUrl;
-var $elm$url$Url$addPort = F2(
-	function (maybePort, starter) {
-		if (maybePort.$ === 'Nothing') {
-			return starter;
-		} else {
-			var port_ = maybePort.a;
-			return starter + (':' + $elm$core$String$fromInt(port_));
-		}
-	});
-var $elm$url$Url$addPrefixed = F3(
-	function (prefix, maybeSegment, starter) {
-		if (maybeSegment.$ === 'Nothing') {
-			return starter;
-		} else {
-			var segment = maybeSegment.a;
-			return _Utils_ap(
-				starter,
-				_Utils_ap(prefix, segment));
-		}
-	});
-var $elm$url$Url$toString = function (url) {
-	var http = function () {
-		var _v0 = url.protocol;
-		if (_v0.$ === 'Http') {
-			return 'http://';
-		} else {
-			return 'https://';
-		}
-	}();
-	return A3(
-		$elm$url$Url$addPrefixed,
-		'#',
-		url.fragment,
-		A3(
-			$elm$url$Url$addPrefixed,
-			'?',
-			url.query,
-			_Utils_ap(
-				A2(
-					$elm$url$Url$addPort,
-					url.port_,
-					_Utils_ap(http, url.host)),
-				url.path)));
 };
 var $author$project$Main$update = F2(
 	function (msg, model) {
-		if (msg.$ === 'LinkClicked') {
-			var urlRequest = msg.a;
-			if (urlRequest.$ === 'Internal') {
-				var url = urlRequest.a;
-				return _Utils_Tuple2(
-					model,
-					A2(
-						$elm$browser$Browser$Navigation$pushUrl,
-						model.key,
-						$elm$url$Url$toString(url)));
-			} else {
-				var href = urlRequest.a;
-				return _Utils_Tuple2(
-					model,
-					$elm$browser$Browser$Navigation$load(href));
-			}
-		} else {
-			var url = msg.a;
-			return _Utils_Tuple2(
-				_Utils_update(
-					model,
-					{url: url}),
-				$elm$core$Platform$Cmd$none);
-		}
+		return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 	});
+var $elm$html$Html$div = _VirtualDom_node('div');
+var $elm$json$Json$Encode$string = _Json_wrap;
+var $elm$html$Html$Attributes$stringProperty = F2(
+	function (key, string) {
+		return A2(
+			_VirtualDom_property,
+			key,
+			$elm$json$Json$Encode$string(string));
+	});
+var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
 var $elm$html$Html$h1 = _VirtualDom_node('h1');
+var $elm$html$Html$Attributes$id = $elm$html$Html$Attributes$stringProperty('id');
 var $elm$html$Html$p = _VirtualDom_node('p');
 var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
-var $author$project$Main$view = function (model) {
-	return {
-		body: _List_fromArray(
+var $author$project$Pages$Landing$header = A2(
+	$elm$html$Html$div,
+	_List_fromArray(
+		[
+			$elm$html$Html$Attributes$id('header-container')
+		]),
+	_List_fromArray(
+		[
+			A2(
+			$elm$html$Html$div,
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$id('header-content')
+				]),
+			_List_fromArray(
+				[
+					A2(
+					$elm$html$Html$div,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$id('header-text-container')
+						]),
+					_List_fromArray(
+						[
+							A2(
+							$elm$html$Html$h1,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$class('header-title')
+								]),
+							_List_fromArray(
+								[
+									$elm$html$Html$text('Hi!')
+								])),
+							A2(
+							$elm$html$Html$p,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$class('header-subtitle')
+								]),
+							_List_fromArray(
+								[
+									$elm$html$Html$text('Welcome to my kingdom')
+								]))
+						]))
+				])),
+			A2(
+			$elm$html$Html$div,
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$id('header-background-image')
+				]),
+			_List_Nil)
+		]));
+var $elm$core$Bitwise$and = _Bitwise_and;
+var $elm$core$Bitwise$shiftRightBy = _Bitwise_shiftRightBy;
+var $elm$core$String$repeatHelp = F3(
+	function (n, chunk, result) {
+		return (n <= 0) ? result : A3(
+			$elm$core$String$repeatHelp,
+			n >> 1,
+			_Utils_ap(chunk, chunk),
+			(!(n & 1)) ? result : _Utils_ap(result, chunk));
+	});
+var $elm$core$String$repeat = F2(
+	function (n, chunk) {
+		return A3($elm$core$String$repeatHelp, n, chunk, '');
+	});
+var $author$project$Pages$Landing$landing = function (model) {
+	var string = 'But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that ';
+	return A2(
+		$elm$html$Html$div,
+		_List_fromArray(
+			[
+				$elm$html$Html$Attributes$class('wrapper')
+			]),
+		_List_fromArray(
 			[
 				A2(
-				$elm$html$Html$h1,
-				_List_Nil,
+				$elm$html$Html$div,
 				_List_fromArray(
 					[
-						$elm$html$Html$text('Hi!')
-					])),
-				A2(
-				$elm$html$Html$p,
-				_List_Nil,
+						$elm$html$Html$Attributes$class('parallax-container')
+					]),
 				_List_fromArray(
 					[
-						$elm$html$Html$text('Welcome to my kingdom!')
+						$author$project$Pages$Landing$header,
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('foreground content')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text(
+								A2($elm$core$String$repeat, 11, string))
+							]))
 					]))
-			]),
-		title: 'Kaappo Raivio'
-	};
+			]));
 };
-var $author$project$Main$main = $elm$browser$Browser$application(
-	{init: $author$project$Main$init, onUrlChange: $author$project$Main$UrlChanged, onUrlRequest: $author$project$Main$LinkClicked, subscriptions: $author$project$Main$subscriptions, update: $author$project$Main$update, view: $author$project$Main$view});
+var $author$project$Main$view = function (model) {
+	return A2(
+		$elm$html$Html$div,
+		_List_Nil,
+		_List_fromArray(
+			[
+				function () {
+				var _v0 = model.currentPage;
+				return $author$project$Pages$Landing$landing(model);
+			}()
+			]));
+};
+var $author$project$Main$main = $elm$browser$Browser$element(
+	{init: $author$project$Main$init, subscriptions: $author$project$Main$subscriptions, update: $author$project$Main$update, view: $author$project$Main$view});
 _Platform_export({'Main':{'init':$author$project$Main$main(
 	$elm$json$Json$Decode$succeed(_Utils_Tuple0))(0)}});}(this));
